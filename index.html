@@ -1,0 +1,91 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="dependencies/vue.min.js"></script>
+  <script src="dependencies/vue-router.min.js"></script>
+  <script src="dependencies/http-vue-loader.min.js"></script>
+  <script src="dependencies/axios.min.js"></script>
+  <meta charset="utf-8">
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.green-lime.min.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-color--grey-100" id="pomodoro" v-cloak>
+    <main class="mdl-layout__content">
+      <div class="mdl-grid">
+        <div class="mdl-card mdl-cell mdl-cell--12-col test-card mdl-shadow--3dp">
+          <div class="mdl-card__title" v-bind:class="{'break-color': isBreak}">
+            <h4 class="mdl-card__title-text">{{title}}</h4>
+          </div>
+          <a href="#" @click="run" id="minutes-link">
+            <div class="mdl-card__media">
+
+              <div>
+                <h1 class="align-center mdl-typography--display-4" id="hms-display">{{hrs}}:{{mins}}:{{secs}}</h1>
+              </div>
+
+            </div>
+          </a>
+          <div id="prog-base">
+            <div class="prog-amount" v-bind:style="{ width: progressBar }" v-bind:class="{'break-color': isBreak}">
+            </div>
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <div class="mdl-grid mdl-grid--no-spacing">
+              <div class="mdl-cell mdl-cell--5-col mdl-cell--4-col-tablet">
+                <h6 class="align-center">Session Length</h6>
+                <button class="mdl-button mdl-js-button mdl-button--raised expand-btn" @click="incSession">
+                  <i class="material-icons">add</i>
+                </button>
+                <form action="#">
+                  <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input align-center" type="number" value="25" pattern="-?[0-9]*(\.[0-9]+)?" v-model="sessionLength">
+                    <label class="mdl-textfield__label align-center">{{sessionMinutesLabel}}</label>
+                  </div>
+                </form>
+                <button class="mdl-button mdl-js-button mdl-button--raised expand-btn" @click="decSession">
+                  <i class="material-icons">remove</i>
+                </button>
+              </div>
+              <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet">
+              </div>
+              <div class="mdl-cell mdl-cell--5-col mdl-cell--4-col-tablet">
+                <h6 class="align-center">Break Length</h6>
+                <button class="mdl-button mdl-js-button mdl-button--raised expand-btn" @click="incBreak">
+                  <i class="material-icons">add</i>
+                </button>
+                <form action="#">
+                  <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input align-center" type="number" value="5" pattern="-?[0-9]*(\.[0-9]+)?" v-model="breakLength">
+                    <label class="mdl-textfield__label align-center">{{breakMinutesLabel}}</label>
+                  </div>
+                </form>
+                <button class="mdl-button mdl-js-button mdl-button--raised expand-btn" @click="decBreak">
+                  <i class="material-icons">remove</i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="mdl-card__menu">
+            <button class="mdl-button mdl-js-button mdl-button--icon white-text" @click="reset" id="reset">
+              <i class="material-icons">restore</i>
+            </button>
+            <div class="mdl-tooltip mdl-tooltip--large" for="reset">Reset Timer</div>
+            <button class="mdl-button mdl-js-button mdl-button--icon white-text" id="completed">
+              <i class="material-icons">check_circle</i>
+            </button>
+            <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="completed">Pomodoros you have completed: <strong>{{completedSessions}}</strong></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+</body>
+
+<script type="module" src="index.js"></script>
+
+<script src="models/global.models.js"></script>
+<link rel="stylesheet" type="text/css" href="index.css">
